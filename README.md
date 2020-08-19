@@ -28,3 +28,19 @@ In order for the sheet to get sent the following is checked:
 If all these conditions are met, the document will be shared with the email(s) listed on top.
 
 An example file called `!Template.xlsx` has been provided that contains the correct formatting.
+
+## Get started with Appscript
+
+If you want to get started yourself and need a little guidance, check [this tutorial](https://yagisanatode.com/2019/04/01/working-with-google-apps-script-in-visual-studio-code-using-clasp/). 
+
+If you want to get started straight away, make sure [NodeJS LTS](https://nodejs.org/en/) and [NPM](https://www.npmjs.com/get-npm) are installed.  
+Then perform the following npm installs, which are recommend being done globally:
+
+[Typescript](https://www.typescriptlang.org/): `npm install -g typescript`  
+[Google clasp](https://github.com/google/clasp): `npm install -g @google/clasp`
+
+When you want to clone an existing appscript from Google use the following format:  
+`clasp clone GOOGLEAPPSCRIPT_ID`
+
+If you did the above and aren't using the current project, be sure to install the following dependency for type definitions in your editor:
+[Google apps-script-types](https://www.npmjs.com/package/@types/google-apps-script): `npm install --save @types/google-apps-script`
