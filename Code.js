@@ -86,22 +86,28 @@ function timedShare(targetMessage) {
   } 
 }
 
-
 function findDiscordUserByEmail(ovosheet, email){
   let outfits = ovosheet.getSheetByName(repOutfitTabName);
   let obsContacts = ovosheet.getSheetByName(repObsContactTabName);
-  // info of getrange: 2 = second row to avoid column name, 3 = email column
-  let maxEntries = outfits.getMaxRows() - 1;
-  let maxObsEntries = obsContacts.getMaxRows() - 1;
-  let emailInstances = outfits.getRange(2, 3, maxEntries).getValues();
-  let obsEmailInstances = obsContacts.getRange(2, 3, maxObsEntries).getValues();
-  let totalEmails = emailInstances.concat(obsEmailInstances);
-  for(var i = 0; i<totalEmails.length;i++){
-    if(totalEmails[i] == email){ 
+  let repResult = fetchDiscordIdFromSheet(outfits, email);
+  if (repResult === 'None_Found'){
+    let obsResult = fetchDiscordIdFromSheet(obsContacts, email);
+    return obsResult;
+  } else{
+    return repResult;
+  }
+}
+
+function fetchDiscordIdFromSheet(contacts, email){  
+  let maxEntries = contacts.getMaxRows() - 1;
+  let emailEntries = contacts.getRange(2, 3, maxEntries).getValues();
+  for(var i = 0; i<emailEntries.length;i++){
+    if(emailEntries[i] == email){ 
       let correctCell = i+2;
-      return ovosheet.getRange(`E${correctCell}`).getValue();
+      return contacts.getRange(`E${correctCell}`).getValue();
     }
   }
+  return 'None_Found';
 }
   
 function getEmailErrorMessage(docName){
