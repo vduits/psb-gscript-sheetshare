@@ -1,8 +1,6 @@
 //[Google]
 // OvO Folder name, please update if it changed.
 const ovoFolderId = ""; 
-// ObsCam Sheet Folder name, please update if it changed.
-const obsFolderId = ""; 
 const repOutfitTabName = "";
 const repObsContactTabName = "";
 

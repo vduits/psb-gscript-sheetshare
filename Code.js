@@ -2,7 +2,6 @@ const universalTimeZone = "UTC";
 const dateFormat = "yyyy/MM/dd";
 const currentDay = Utilities.formatDate(new Date(), universalTimeZone, dateFormat);
 const currentYear = currentDay.substring(0,4);
-const standardDriveLink = "https://drive.google.com/drive/u/0/shared-with-me";
 
 
 class FileList{
@@ -18,9 +17,7 @@ class FileList{
 
 function RunOvOFolderSequence(){
   let ovofileList = RetrieveSheetsFromFolder(ovoFolderId);
-  ovofileList.list.forEach(file => ShareEachApplicable(file,accountMessage));  
-  let obsfileList = RetrieveSheetsFromFolder(obsFolderId);
-  obsfileList.list.forEach(file => ShareEachApplicable(file,obsMessage)); 
+  ovofileList.list.forEach(file => ShareEachApplicable(file,accountMessage));
 }
 
 function RetrieveSheetsFromFolder(folderId){
