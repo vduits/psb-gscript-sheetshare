@@ -1,6 +1,6 @@
 const botName = 'Edward';
 
-function sharedMessenger(docName, targetMessage, discordUserList) {
+function sharedMessenger(docName, sheetID, targetMessage, discordUserList) {
     let contents;
     let longThing = "";
     if(discordUserList.length > 0){
@@ -8,9 +8,9 @@ function sharedMessenger(docName, targetMessage, discordUserList) {
         let discordId = discordUserList[i];
         longThing += `<@${discordId}>`
       }
-      contents = `Hi ${longThing}. ${targetMessage} been sent for ${docName}, please check [your shared drive](${standardDriveLink}).`;
+      contents = `Hi ${longThing}. ${targetMessage} been sent for [${docName}](${baseDriveLink}${sheetID}).`;
     }else{
-      contents = `${targetMessage} been sent for ${docName}, please check [your shared drive](${standardDriveLink}).`;
+      contents = `${targetMessage} been sent for [${docName}](${baseDriveLink}${sheetID}).`;
     }  
     discordMessenger(contents); 
   }

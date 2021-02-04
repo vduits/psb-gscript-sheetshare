@@ -17,7 +17,7 @@ class FileList{
 
 function RunOvOFolderSequence(){
   let ovofileList = RetrieveSheetsFromFolder(ovoFolderId);
-  ovofileList.list.forEach(file => ShareEachApplicable(file,accountMessage));
+  ovofileList.list.forEach(file => ShareEachApplicable(file));
 }
 
 function RetrieveSheetsFromFolder(folderId){
@@ -27,7 +27,6 @@ function RetrieveSheetsFromFolder(folderId){
   
   while(ovoFiles.hasNext()){
     let ovoFile = ovoFiles.next();
-    
     let ovoFileName = ovoFile.getName();
     let ovoFileYear = ovoFileName.substring(0,4);
     if(ovoFileYear === currentYear){
@@ -37,19 +36,21 @@ function RetrieveSheetsFromFolder(folderId){
   return fileList;
 }
 
-function ShareEachApplicable(file, targetMessage){
+function ShareEachApplicable(file){
   let fileId = file.getId();
   let activeSheet = SpreadsheetApp.openById(fileId);
   SpreadsheetApp.setActiveSpreadsheet(activeSheet);
-  timedShare(targetMessage);
+  timedShare();
 }
 
-function timedShare(targetMessage) {  
+function timedShare() {  
   let activeSheet = SpreadsheetApp.getActiveSheet();
   let ovoRepSheet = SpreadsheetApp.openById(ovoContactListSheetId);
   let sheetID = SpreadsheetApp.getActiveSpreadsheet().getId();
-  let range = activeSheet.getRange('B1:B4');
+  let range = activeSheet.getRange('B1:B5');
   let status = range.getCell(4,1);
+  let requestType = range.getCell(5,1).getValue();
+  let targetMessage = determineAccountsType(requestType);
   if (status.isBlank()){
     let emails =  range.getCell(1,1);
     let requestDate = range.getCell(2,1);
@@ -69,7 +70,7 @@ function timedShare(targetMessage) {
           }
         )
         status.setValue(sharedMesssage);
-        sharedMessenger(activeSheet.getParent().getName(), targetMessage, discordUserList);
+        sharedMessenger(activeSheet.getParent().getName(), sheetID, targetMessage, discordUserList);
       }
     } else if (emails.isBlank()){     
       let emailMessage = getEmailErrorMessage(activeSheet.getParent().getName());
@@ -105,6 +106,14 @@ function fetchDiscordIdFromSheet(contacts, email){
     }
   }
   return 'None_Found';
+}
+
+function determineAccountsType(requestType){
+  if (requestType === observerAccountsType){
+    return obsMessage;
+  } else if (requestType === normalAccountsType) {
+    return accountMessage;
+  }
 }
   
 function getEmailErrorMessage(docName){
