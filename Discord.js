@@ -8,9 +8,9 @@ function sharedMessenger(docName, targetMessage, discordUserList) {
         let discordId = discordUserList[i];
         longThing += `<@${discordId}>`
       }
-      contents = `Hi ${longThing}. ${targetMessage} been sent for ${docName}, please check ${standardDriveLink}.`;
+      contents = `Hi ${longThing}. ${targetMessage} been sent for ${docName}, please check [your shared drive](${standardDriveLink}).`;
     }else{
-      contents = `${targetMessage} been sent for ${docName}, please check ${standardDriveLink}.`;
+      contents = `${targetMessage} been sent for ${docName}, please check [your shared drive](${standardDriveLink}).`;
     }  
     discordMessenger(contents); 
   }
